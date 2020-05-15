@@ -1,0 +1,6 @@
+framework module Pods_Take_Food {
+  umbrella header "Pods-Take&Food-umbrella.h"
+
+  export *
+  module * { export * }
+}
