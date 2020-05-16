@@ -11,6 +11,7 @@ import Foundation
 
 struct Restaurant: Codable {
     let id: Int?
-    let name: String
-    let administrators: [User]
+    let name: String?
+    let administrators: [Person]?
+    let announcements: [Announcement]?
 }

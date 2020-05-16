@@ -34,6 +34,8 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = .systemYellow
 
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Create announcement"
@@ -113,7 +115,7 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource {
     }
     
     @objc func addItem() {
-        self.dataList.append(Dish(id: nil, announcementID: nil, name: self.nameInput.text!, amount: Int(self.amountInput.text!)!))
+        self.dataList.append(Dish(id: nil, announcementId: nil, name: self.nameInput.text!, amount: Int(self.amountInput.text!)!))
         self.nameInput.text = ""
         self.amountInput.text = ""
         self.dishList.reloadData()
@@ -123,7 +125,9 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource {
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        let announcement = Announcement(id: nil, ownerID: 3, dishes: self.dataList, date: dateFormatter.string(from: date))
+//        dateFormatter.string(from: date)
+        let announcement = Announcement(id: nil, restaurantId: SessionEntity.user.restaurantId, dishes: self.dataList, date: "2020-01-04 22:45:36.789")
+        print(announcement)
         Alamofire.request(Router.createAnnouncement(announcement: announcement)).responseJSON { (response) in
             print(response)
         }

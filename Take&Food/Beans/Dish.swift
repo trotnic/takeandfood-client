@@ -11,7 +11,7 @@ import Foundation
 
 struct Dish: Codable {
     let id: Int?
-    let announcementID: Int?
+    let announcementId: Int?
     let name: String
     let amount: Int
 }

@@ -21,6 +21,15 @@
 		86564B3D24502ADC003F21F3 /* RestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86564B3C24502ADC003F21F3 /* RestaurantViewController.swift */; };
 		86564B3F2450387B003F21F3 /* RestaurantCreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86564B3E2450387B003F21F3 /* RestaurantCreateController.swift */; };
 		86564B43245048F1003F21F3 /* AnnouncementListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86564B42245048F1003F21F3 /* AnnouncementListController.swift */; };
+		86B38B45246EBFD900F49C54 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B44246EBFD900F49C54 /* Router.swift */; };
+		86B38B47246EC76B00F49C54 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B46246EC76B00F49C54 /* NetworkService.swift */; };
+		86B38B49246F1EF500F49C54 /* AuthEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B48246F1EF500F49C54 /* AuthEntity.swift */; };
+		86B38B4B246F1FEF00F49C54 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B4A246F1FEF00F49C54 /* LoginViewController.swift */; };
+		86B38B4D246FD9F700F49C54 /* SessionEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B4C246FD9F700F49C54 /* SessionEntity.swift */; };
+		86B38B4F246FDDD400F49C54 /* Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B4E246FDDD400F49C54 /* Switcher.swift */; };
+		86B38B52246FEABC00F49C54 /* CommonTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B51246FEABC00F49C54 /* CommonTabBarController.swift */; };
+		86B38B54246FED7200F49C54 /* AdministratorMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B53246FED7200F49C54 /* AdministratorMainController.swift */; };
+		86B38B57246FF75400F49C54 /* MockupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B56246FF75400F49C54 /* MockupData.swift */; };
 		86BDEA26244F2ECF001B1896 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BDEA25244F2ECF001B1896 /* AppDelegate.swift */; };
 		86BDEA28244F2ECF001B1896 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BDEA27244F2ECF001B1896 /* SceneDelegate.swift */; };
 		86BDEA2A244F2ECF001B1896 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BDEA29244F2ECF001B1896 /* ViewController.swift */; };
@@ -48,6 +57,15 @@
 		86564B3C24502ADC003F21F3 /* RestaurantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewController.swift; sourceTree = "<group>"; };
 		86564B3E2450387B003F21F3 /* RestaurantCreateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCreateController.swift; sourceTree = "<group>"; };
 		86564B42245048F1003F21F3 /* AnnouncementListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementListController.swift; sourceTree = "<group>"; };
+		86B38B44246EBFD900F49C54 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		86B38B46246EC76B00F49C54 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		86B38B48246F1EF500F49C54 /* AuthEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEntity.swift; sourceTree = "<group>"; };
+		86B38B4A246F1FEF00F49C54 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		86B38B4C246FD9F700F49C54 /* SessionEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEntity.swift; sourceTree = "<group>"; };
+		86B38B4E246FDDD400F49C54 /* Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switcher.swift; sourceTree = "<group>"; };
+		86B38B51246FEABC00F49C54 /* CommonTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTabBarController.swift; sourceTree = "<group>"; };
+		86B38B53246FED7200F49C54 /* AdministratorMainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdministratorMainController.swift; sourceTree = "<group>"; };
+		86B38B56246FF75400F49C54 /* MockupData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockupData.swift; sourceTree = "<group>"; };
 		86BDEA22244F2ECF001B1896 /* Take&Food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Take&Food.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		86BDEA25244F2ECF001B1896 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86BDEA27244F2ECF001B1896 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +102,7 @@
 				86564B2C244F94FF003F21F3 /* Feedback.swift */,
 				86564B2E244F9538003F21F3 /* Announcement.swift */,
 				86564B30244F9562003F21F3 /* Dish.swift */,
+				86B38B48246F1EF500F49C54 /* AuthEntity.swift */,
 			);
 			path = Beans;
 			sourceTree = "<group>";
@@ -92,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				86564B24244F78D7003F21F3 /* DataService.swift */,
+				86B38B4E246FDDD400F49C54 /* Switcher.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -107,8 +127,27 @@
 				86CF06302452090D00736C38 /* AnnouncementCreateController.swift */,
 				86447C1A2452D74B0043A334 /* PersonListController.swift */,
 				86447C1C24530C8F0043A334 /* PersonViewController.swift */,
+				86B38B4A246F1FEF00F49C54 /* LoginViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		86B38B50246FEA9F00F49C54 /* TabControllers */ = {
+			isa = PBXGroup;
+			children = (
+				86B38B51246FEABC00F49C54 /* CommonTabBarController.swift */,
+				86564B28244F92C7003F21F3 /* MainController.swift */,
+				86B38B53246FED7200F49C54 /* AdministratorMainController.swift */,
+			);
+			path = TabControllers;
+			sourceTree = "<group>";
+		};
+		86B38B55246FF74800F49C54 /* MockupData */ = {
+			isa = PBXGroup;
+			children = (
+				86B38B56246FF75400F49C54 /* MockupData.swift */,
+			);
+			path = MockupData;
 			sourceTree = "<group>";
 		};
 		86BDEA19244F2ECF001B1896 = {
@@ -132,12 +171,13 @@
 		86BDEA24244F2ECF001B1896 /* Take&Food */ = {
 			isa = PBXGroup;
 			children = (
+				86B38B55246FF74800F49C54 /* MockupData */,
+				86B38B50246FEA9F00F49C54 /* TabControllers */,
 				86564B32244F9A7F003F21F3 /* Controllers */,
 				86564B23244F78B8003F21F3 /* Service */,
 				86564B20244F67D7003F21F3 /* Beans */,
 				86BDEA39244F2EE0001B1896 /* Network */,
 				86BDEA25244F2ECF001B1896 /* AppDelegate.swift */,
-				86564B28244F92C7003F21F3 /* MainController.swift */,
 				86BDEA27244F2ECF001B1896 /* SceneDelegate.swift */,
 				86BDEA29244F2ECF001B1896 /* ViewController.swift */,
 				86BDEA2B244F2ECF001B1896 /* Main.storyboard */,
@@ -153,6 +193,9 @@
 			children = (
 				86BDEA3A244F58DC001B1896 /* Network.swift */,
 				86BDEA3C244F5D91001B1896 /* Constants.swift */,
+				86B38B44246EBFD900F49C54 /* Router.swift */,
+				86B38B46246EC76B00F49C54 /* NetworkService.swift */,
+				86B38B4C246FD9F700F49C54 /* SessionEntity.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -289,6 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86B38B47246EC76B00F49C54 /* NetworkService.swift in Sources */,
 				86564B29244F92C7003F21F3 /* MainController.swift in Sources */,
 				86564B3D24502ADC003F21F3 /* RestaurantViewController.swift in Sources */,
 				86564B22244F67E0003F21F3 /* Person.swift in Sources */,
@@ -296,9 +340,16 @@
 				86564B25244F78D7003F21F3 /* DataService.swift in Sources */,
 				86564B2F244F9538003F21F3 /* Announcement.swift in Sources */,
 				86BDEA2A244F2ECF001B1896 /* ViewController.swift in Sources */,
+				86B38B49246F1EF500F49C54 /* AuthEntity.swift in Sources */,
 				86564B3F2450387B003F21F3 /* RestaurantCreateController.swift in Sources */,
 				86BDEA3D244F5D91001B1896 /* Constants.swift in Sources */,
 				86BDEA26244F2ECF001B1896 /* AppDelegate.swift in Sources */,
+				86B38B52246FEABC00F49C54 /* CommonTabBarController.swift in Sources */,
+				86B38B4D246FD9F700F49C54 /* SessionEntity.swift in Sources */,
+				86B38B54246FED7200F49C54 /* AdministratorMainController.swift in Sources */,
+				86B38B4B246F1FEF00F49C54 /* LoginViewController.swift in Sources */,
+				86B38B57246FF75400F49C54 /* MockupData.swift in Sources */,
+				86B38B45246EBFD900F49C54 /* Router.swift in Sources */,
 				86BDEA3B244F58DC001B1896 /* Network.swift in Sources */,
 				86447C1B2452D74B0043A334 /* PersonListController.swift in Sources */,
 				86CF062F245200D700736C38 /* DishTableController.swift in Sources */,
@@ -306,6 +357,7 @@
 				86CF06312452090D00736C38 /* AnnouncementCreateController.swift in Sources */,
 				86447C1D24530C8F0043A334 /* PersonViewController.swift in Sources */,
 				86564B43245048F1003F21F3 /* AnnouncementListController.swift in Sources */,
+				86B38B4F246FDDD400F49C54 /* Switcher.swift in Sources */,
 				86BDEA28244F2ECF001B1896 /* SceneDelegate.swift in Sources */,
 				86564B3B244F9EA8003F21F3 /* RestaurantListController.swift in Sources */,
 				86564B2B244F94CD003F21F3 /* Restaurant.swift in Sources */,

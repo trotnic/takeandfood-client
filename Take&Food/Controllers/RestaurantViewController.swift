@@ -7,13 +7,13 @@
 //
 
 import UIKit
-import Alamofire
+//import Alamofire
 
 class RestaurantViewController: UIViewController, UITableViewDataSource {
 
     let restaurant: Restaurant
     var feedView: UITableView
-    var feedData: [Feedback]?
+//    var feedData: [Feedback]?
     var inputField: UITextField
     var submitButton: UIButton
 
@@ -88,23 +88,22 @@ class RestaurantViewController: UIViewController, UITableViewDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.fetchData()
+//        self.fetchData()
     }
     
-    func fetchData() {
-        Alamofire.request(URL(string: "http://127.0.0.1:8080/feedback/restaurant")!, method: .get, parameters: ["id": self.restaurant.id!], encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
-            self.feedData = try! JSONDecoder().decode([Feedback].self, from: response.data!)
-            DispatchQueue.main.async {
-                self.feedView.reloadData()
-            }
-        }
-//        Alamofire.request(Router.getFeedbackForId(id: self.restaurant.id!)).responseJSON { (response) in
-//            self.feedData = try! JSONDecoder().decode([Feedback].self, from: response.data!)
-//            DispatchQueue.main.async {
-//                self.feedView.reloadData()
+//    func fetchData() {
+//        TAFNetwork.request(router: .getRestaurantFeedback(id: restaurant.id!)) { (result: Result<[Feedback], Error>) in
+//            switch result {
+//            case .success(let data):
+//                self.feedData = data
+//                DispatchQueue.main.async {
+//                    self.feedView.reloadData()
+//                }
+//            case .failure(let error):
+//                print(error)
 //            }
 //        }
-    }
+//    }
 
     /*
     // MARK: - Navigation
@@ -126,13 +125,13 @@ class RestaurantViewController: UIViewController, UITableViewDataSource {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
 
-        Alamofire.request(Router.createFeedback(restaurantID: self.restaurant.id!, userID: 1, text: self.inputField.text!, date: dateFormatter.string(from: date))).responseJSON { (response) in
-            print(response)
-        }
+//        Alamofire.request(Router.createFeedback(restaurantID: self.restaurant.id!, userID: 1, text: self.inputField.text!, date: dateFormatter.string(from: date))).responseJSON { (response) in
+//            print(response)
+//        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let data = self.feedData {
+        if let data = self.restaurant.announcements {
             return data.count
         }
         return 0
@@ -141,7 +140,7 @@ class RestaurantViewController: UIViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         
-        cell.textLabel?.text = self.feedData?[indexPath.row].text
+        cell.textLabel?.text = self.restaurant.announcements?[indexPath.row].date
         return cell
     }
     

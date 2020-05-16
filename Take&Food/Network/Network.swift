@@ -70,7 +70,7 @@ enum Router: URLRequestConvertible {
         case .createRestaurant(let restaurant): do {
             paramDict["name"] = restaurant.name
             var administrators = [Int]()
-            for admin in restaurant.administrators {
+            for admin in restaurant.administrators! {
                 administrators.append(admin.id!)
             }
             paramDict["administrators"] = administrators
@@ -84,7 +84,7 @@ enum Router: URLRequestConvertible {
             break
         case .createAnnouncement(let announcement): do {
             var dishList = Array<[String:Any]>()
-            for item in announcement.dishes {
+            for item in announcement.dishes! {
                 var dishTmp: [String:Any] = [:]
                 dishTmp["name"] = item.name
                 dishTmp["amount"] = item.amount
@@ -92,7 +92,7 @@ enum Router: URLRequestConvertible {
             }
             paramDict["dishes"] = dishList
             paramDict["date"] = announcement.date
-            paramDict["ownerID"] = announcement.ownerID
+            paramDict["ownerID"] = announcement.restaurantId!
             break
             }
         }

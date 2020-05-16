@@ -86,8 +86,8 @@ class RestaurantCreateController: UIViewController {
     
     
     @objc func doShit() {
-        let administrators = [User(id: 1, name: nil, login: nil, password: nil, email: nil, restaurantID: nil, role: nil, status: nil)]
-        let restaurant = Restaurant(id: nil, name: self.nameInput.text!, administrators: administrators)
+        let administrators = [Person(id: 1, name: nil, login: nil, password: nil, email: nil, restaurantId: nil, role: nil, status: nil)]
+        let restaurant = Restaurant(id: nil, name: self.nameInput.text!, administrators: administrators, announcements: [])
         Alamofire.request(Router.createRestaurant(restaurant: restaurant)).responseJSON { (response) in
             print(response)
         }

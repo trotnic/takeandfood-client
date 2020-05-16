@@ -11,7 +11,7 @@ import Foundation
 
 struct Announcement: Codable {
     let id: Int?
-    let ownerID: Int
-    let dishes: [Dish]
-    let date: String
+    let restaurantId: Int?
+    let dishes: [Dish]?
+    let date: String?
 }

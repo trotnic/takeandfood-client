@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class AnnouncementListController: UITableViewController {
 
@@ -16,6 +15,10 @@ class AnnouncementListController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        if (SessionEntity.user.role == 0) {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(createNewOne))
+        }
         
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Announcements"
@@ -28,6 +31,10 @@ class AnnouncementListController: UITableViewController {
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
     }
 
+    @objc func createNewOne() {
+        self.navigationController?.pushViewController(AnnouncementCreateController(), animated: true)
+    }
+    
     // MARK: - Table view data source
 
     override func viewDidAppear(_ animated: Bool) {
@@ -50,10 +57,15 @@ class AnnouncementListController: UITableViewController {
     }
 
     func fetchData() {
-        Alamofire.request(Router.getAnnouncements).responseJSON { (response) in
-            self.data = try! JSONDecoder().decode([Announcement].self, from: response.data!)
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+        TAFNetwork.request(router: .getAnnouncementAll(page: 1)) { (result: Result<[Announcement], Error>) in
+            switch result {
+            case .success(let data):
+                self.data = data
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
             }
         }
     }
@@ -62,8 +74,7 @@ class AnnouncementListController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        cell.textLabel?.text = self.data?[indexPath.row].date
-        // Configure the cell...
+        cell.textLabel?.text = self.data?[indexPath.row].date!
 
         return cell
     }

@@ -10,8 +10,8 @@ import UIKit
 
 class MainController: UITabBarController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        super.loadView()
 
         self.view.backgroundColor = .white
         
@@ -21,8 +21,6 @@ class MainController: UITabBarController {
         
         let vc2 = UINavigationController()
         vc2.viewControllers = [RestaurantListController()]
-//        vc2.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
-//        vc2.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "wnad.and.stars"), selectedImage: nil)
         vc2.tabBarItem = UITabBarItem(title: "Restaurants", image: UIImage(systemName: "wand.and.stars"), tag: 1)
         
         let vc3 = UINavigationController()

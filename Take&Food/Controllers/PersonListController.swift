@@ -11,7 +11,7 @@ import Alamofire
 
 class PersonListController: UITableViewController {
 
-    var data: [User]?
+    var data: [Person]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ class PersonListController: UITableViewController {
     
     func fetchData() {
         Alamofire.request(Router.getUsers).responseJSON { (response) in
-            self.data = try! JSONDecoder().decode([User].self, from: response.data!)
+            self.data = try! JSONDecoder().decode([Person].self, from: response.data!)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -42,12 +42,10 @@ class PersonListController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         if let data = self.data {
             return data.count
         }
