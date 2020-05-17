@@ -21,6 +21,10 @@
 		86564B3D24502ADC003F21F3 /* RestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86564B3C24502ADC003F21F3 /* RestaurantViewController.swift */; };
 		86564B3F2450387B003F21F3 /* RestaurantCreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86564B3E2450387B003F21F3 /* RestaurantCreateController.swift */; };
 		86564B43245048F1003F21F3 /* AnnouncementListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86564B42245048F1003F21F3 /* AnnouncementListController.swift */; };
+		86668516247092740087E74F /* OrdersListControllerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86668515247092740087E74F /* OrdersListControllerTableViewController.swift */; };
+		866685182470A0A70087E74F /* AcceptOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866685172470A0A70087E74F /* AcceptOrderViewController.swift */; };
+		8666851B24712B1B0087E74F /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8666851A24712B1B0087E74F /* RegistrationViewController.swift */; };
+		8666851E247138160087E74F /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8666851D247138160087E74F /* ViewControllerExtensions.swift */; };
 		86B38B45246EBFD900F49C54 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B44246EBFD900F49C54 /* Router.swift */; };
 		86B38B47246EC76B00F49C54 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B46246EC76B00F49C54 /* NetworkService.swift */; };
 		86B38B49246F1EF500F49C54 /* AuthEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B48246F1EF500F49C54 /* AuthEntity.swift */; };
@@ -30,6 +34,8 @@
 		86B38B52246FEABC00F49C54 /* CommonTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B51246FEABC00F49C54 /* CommonTabBarController.swift */; };
 		86B38B54246FED7200F49C54 /* AdministratorMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B53246FED7200F49C54 /* AdministratorMainController.swift */; };
 		86B38B57246FF75400F49C54 /* MockupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B56246FF75400F49C54 /* MockupData.swift */; };
+		86B38B5A247017B200F49C54 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B59247017B200F49C54 /* AnnouncementCell.swift */; };
+		86B38B5C2470447700F49C54 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B5B2470447700F49C54 /* Order.swift */; };
 		86BDEA26244F2ECF001B1896 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BDEA25244F2ECF001B1896 /* AppDelegate.swift */; };
 		86BDEA28244F2ECF001B1896 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BDEA27244F2ECF001B1896 /* SceneDelegate.swift */; };
 		86BDEA2A244F2ECF001B1896 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BDEA29244F2ECF001B1896 /* ViewController.swift */; };
@@ -57,6 +63,10 @@
 		86564B3C24502ADC003F21F3 /* RestaurantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewController.swift; sourceTree = "<group>"; };
 		86564B3E2450387B003F21F3 /* RestaurantCreateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCreateController.swift; sourceTree = "<group>"; };
 		86564B42245048F1003F21F3 /* AnnouncementListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementListController.swift; sourceTree = "<group>"; };
+		86668515247092740087E74F /* OrdersListControllerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersListControllerTableViewController.swift; sourceTree = "<group>"; };
+		866685172470A0A70087E74F /* AcceptOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptOrderViewController.swift; sourceTree = "<group>"; };
+		8666851A24712B1B0087E74F /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		8666851D247138160087E74F /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		86B38B44246EBFD900F49C54 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		86B38B46246EC76B00F49C54 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		86B38B48246F1EF500F49C54 /* AuthEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEntity.swift; sourceTree = "<group>"; };
@@ -66,6 +76,8 @@
 		86B38B51246FEABC00F49C54 /* CommonTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTabBarController.swift; sourceTree = "<group>"; };
 		86B38B53246FED7200F49C54 /* AdministratorMainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdministratorMainController.swift; sourceTree = "<group>"; };
 		86B38B56246FF75400F49C54 /* MockupData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockupData.swift; sourceTree = "<group>"; };
+		86B38B59247017B200F49C54 /* AnnouncementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCell.swift; sourceTree = "<group>"; };
+		86B38B5B2470447700F49C54 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		86BDEA22244F2ECF001B1896 /* Take&Food.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Take&Food.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		86BDEA25244F2ECF001B1896 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86BDEA27244F2ECF001B1896 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +115,7 @@
 				86564B2E244F9538003F21F3 /* Announcement.swift */,
 				86564B30244F9562003F21F3 /* Dish.swift */,
 				86B38B48246F1EF500F49C54 /* AuthEntity.swift */,
+				86B38B5B2470447700F49C54 /* Order.swift */,
 			);
 			path = Beans;
 			sourceTree = "<group>";
@@ -127,9 +140,27 @@
 				86CF06302452090D00736C38 /* AnnouncementCreateController.swift */,
 				86447C1A2452D74B0043A334 /* PersonListController.swift */,
 				86447C1C24530C8F0043A334 /* PersonViewController.swift */,
-				86B38B4A246F1FEF00F49C54 /* LoginViewController.swift */,
+				86668515247092740087E74F /* OrdersListControllerTableViewController.swift */,
+				866685172470A0A70087E74F /* AcceptOrderViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		8666851924712ABA0087E74F /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				86B38B4A246F1FEF00F49C54 /* LoginViewController.swift */,
+				8666851A24712B1B0087E74F /* RegistrationViewController.swift */,
+			);
+			path = Authorization;
+			sourceTree = "<group>";
+		};
+		8666851C247138010087E74F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8666851D247138160087E74F /* ViewControllerExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		86B38B50246FEA9F00F49C54 /* TabControllers */ = {
@@ -148,6 +179,14 @@
 				86B38B56246FF75400F49C54 /* MockupData.swift */,
 			);
 			path = MockupData;
+			sourceTree = "<group>";
+		};
+		86B38B582470179A00F49C54 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				86B38B59247017B200F49C54 /* AnnouncementCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		86BDEA19244F2ECF001B1896 = {
@@ -171,6 +210,9 @@
 		86BDEA24244F2ECF001B1896 /* Take&Food */ = {
 			isa = PBXGroup;
 			children = (
+				8666851C247138010087E74F /* Extensions */,
+				8666851924712ABA0087E74F /* Authorization */,
+				86B38B582470179A00F49C54 /* Cells */,
 				86B38B55246FF74800F49C54 /* MockupData */,
 				86B38B50246FEA9F00F49C54 /* TabControllers */,
 				86564B32244F9A7F003F21F3 /* Controllers */,
@@ -335,13 +377,18 @@
 				86B38B47246EC76B00F49C54 /* NetworkService.swift in Sources */,
 				86564B29244F92C7003F21F3 /* MainController.swift in Sources */,
 				86564B3D24502ADC003F21F3 /* RestaurantViewController.swift in Sources */,
+				866685182470A0A70087E74F /* AcceptOrderViewController.swift in Sources */,
 				86564B22244F67E0003F21F3 /* Person.swift in Sources */,
 				86564B2D244F94FF003F21F3 /* Feedback.swift in Sources */,
 				86564B25244F78D7003F21F3 /* DataService.swift in Sources */,
 				86564B2F244F9538003F21F3 /* Announcement.swift in Sources */,
+				8666851B24712B1B0087E74F /* RegistrationViewController.swift in Sources */,
 				86BDEA2A244F2ECF001B1896 /* ViewController.swift in Sources */,
 				86B38B49246F1EF500F49C54 /* AuthEntity.swift in Sources */,
+				86B38B5C2470447700F49C54 /* Order.swift in Sources */,
 				86564B3F2450387B003F21F3 /* RestaurantCreateController.swift in Sources */,
+				8666851E247138160087E74F /* ViewControllerExtensions.swift in Sources */,
+				86B38B5A247017B200F49C54 /* AnnouncementCell.swift in Sources */,
 				86BDEA3D244F5D91001B1896 /* Constants.swift in Sources */,
 				86BDEA26244F2ECF001B1896 /* AppDelegate.swift in Sources */,
 				86B38B52246FEABC00F49C54 /* CommonTabBarController.swift in Sources */,
@@ -360,6 +407,7 @@
 				86B38B4F246FDDD400F49C54 /* Switcher.swift in Sources */,
 				86BDEA28244F2ECF001B1896 /* SceneDelegate.swift in Sources */,
 				86564B3B244F9EA8003F21F3 /* RestaurantListController.swift in Sources */,
+				86668516247092740087E74F /* OrdersListControllerTableViewController.swift in Sources */,
 				86564B2B244F94CD003F21F3 /* Restaurant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

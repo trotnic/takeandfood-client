@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import Alamofire
+//import Alamofire
 
-class AnnouncementCreateController: UIViewController, UITableViewDataSource {
+class AnnouncementCreateController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var dataList: [Dish]
     let dishList: UITableView
@@ -32,16 +32,14 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        super.loadView()
         
-        self.view.backgroundColor = .systemYellow
-
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = "Create announcement"
-        
-        self.dishList.dataSource = self
-        self.dishList.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
+//        self.view.addSubview(self.dishList)
+        self.view.addSubview(self.nameInput)
+        self.view.addSubview(self.amountInput)
+        self.view.addSubview(self.addButton)
+        self.view.addSubview(self.submitButton)
         
         self.dishList.translatesAutoresizingMaskIntoConstraints = false
         self.nameInput.translatesAutoresizingMaskIntoConstraints = false
@@ -49,11 +47,30 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource {
         self.addButton.translatesAutoresizingMaskIntoConstraints = false
         self.submitButton.translatesAutoresizingMaskIntoConstraints = false
         
-        self.view.addSubview(self.dishList)
-        self.view.addSubview(self.nameInput)
-        self.view.addSubview(self.amountInput)
-        self.view.addSubview(self.addButton)
-        self.view.addSubview(self.submitButton)
+        self.dishList.dataSource = self
+        self.dishList.delegate = self
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.view.backgroundColor = .white
+
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.title = "Create announcement"
+        
+        
+        self.dishList.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(containerView)
+//        dishList.frame = containerView.bounds
+        containerView.addSubview(dishList)
+        
+        
+        self.nameInput.backgroundColor = .white
+        self.amountInput.backgroundColor = .white
+        
         
         self.nameInput.borderStyle = .roundedRect
         self.amountInput.borderStyle = .roundedRect
@@ -89,47 +106,64 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource {
         self.submitButton.addTarget(self, action: #selector(submitList), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            self.dishList.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.dishList.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.dishList.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 200),
-            self.dishList.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -400),
+            nameInput.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            nameInput.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            nameInput.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            nameInput.heightAnchor.constraint(equalToConstant: 40),
             
-            self.nameInput.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
-            self.nameInput.topAnchor.constraint(equalTo: self.dishList.bottomAnchor, constant: 30),
-            self.nameInput.widthAnchor.constraint(greaterThanOrEqualToConstant: 150),
+            amountInput.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            amountInput.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            amountInput.topAnchor.constraint(equalTo: self.nameInput.bottomAnchor, constant: 20),
+            amountInput.heightAnchor.constraint(equalToConstant: 40),
             
-            self.amountInput.leadingAnchor.constraint(equalTo: self.nameInput.leadingAnchor),
-            self.amountInput.topAnchor.constraint(equalTo: self.nameInput.bottomAnchor, constant: 15),
-            self.amountInput.widthAnchor.constraint(greaterThanOrEqualToConstant: 150),
+            addButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            addButton.topAnchor.constraint(equalTo: self.amountInput.bottomAnchor, constant: 30),
+            addButton.heightAnchor.constraint(equalToConstant: 40),
             
-            self.addButton.leadingAnchor.constraint(equalTo: self.amountInput.leadingAnchor),
-            self.addButton.topAnchor.constraint(equalTo: self.amountInput.bottomAnchor, constant: 30),
-            self.addButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 50),
+            submitButton.leadingAnchor.constraint(equalTo: self.addButton.trailingAnchor, constant: 20),
+            submitButton.topAnchor.constraint(equalTo: self.amountInput.bottomAnchor, constant: 30),
+            submitButton.heightAnchor.constraint(equalToConstant: 40),
             
-            self.submitButton.leadingAnchor.constraint(equalTo: self.addButton.trailingAnchor, constant: 20),
-            self.submitButton.topAnchor.constraint(equalTo: self.addButton.topAnchor),
-            self.submitButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 50)
+            containerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            containerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            containerView.topAnchor.constraint(equalTo: self.submitButton.bottomAnchor, constant: 60),
+            containerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            
+            dishList.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            dishList.topAnchor.constraint(equalTo: containerView.topAnchor),
+            dishList.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            dishList.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
-        
-        // Do any additional setup after loading the view.
     }
     
     @objc func addItem() {
+        guard nameInput.text != "" && amountInput.text != "" else { return }
         self.dataList.append(Dish(id: nil, announcementId: nil, name: self.nameInput.text!, amount: Int(self.amountInput.text!)!))
-        self.nameInput.text = ""
-        self.amountInput.text = ""
+//        self.nameInput.text = ""
+//        self.amountInput.text = ""
         self.dishList.reloadData()
     }
     
     @objc func submitList() {
+        if dataList.count == 0 { return }
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-//        dateFormatter.string(from: date)
-        let announcement = Announcement(id: nil, restaurantId: SessionEntity.user.restaurantId, dishes: self.dataList, date: "2020-01-04 22:45:36.789")
+        let announcement = Announcement(id: nil, restaurantId: SessionEntity.user.restaurantId!, dishes: self.dataList, date: dateFormatter.string(from: date), status: 0)
         print(announcement)
-        Alamofire.request(Router.createAnnouncement(announcement: announcement)).responseJSON { (response) in
-            print(response)
+        TAFNetwork.request(router: .createAnnouncement(form: announcement)) { (result: Result<Announcement, Error>) in
+            switch result {
+            case .success(let result):
+                print(result)
+            case .failure(let error):
+                print(error)
+            }
+        }
+        self.dataList = []
+        DispatchQueue.main.async {
+            self.dishList.reloadData()
+            self.nameInput.text = ""
+            self.amountInput.text = ""
         }
     }
     
@@ -145,16 +179,26 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource {
         return cell;
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let checkAction = UIContextualAction(style: .destructive, title: "Delete") { (action, sourceView, completion) in
+            self.dataList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .left)
+            completion(true)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [checkAction])
+    }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+//    - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+//        UIContextualAction *checkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+//            completionHandler(true);
+//        }];
+//
+//        checkAction.backgroundColor = UIColor.systemRedColor;
+//
+//        UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[checkAction]];
+//
+//        return config;
+//    }
 }

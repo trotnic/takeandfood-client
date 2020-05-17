@@ -19,10 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
         window = UIWindow(windowScene: scene as! UIWindowScene)
-        window?.rootViewController = LoginViewController()
+        let vc = UINavigationController()
+        vc.viewControllers = [RegistrationViewController()]
+        window?.rootViewController = vc
         window?.makeKeyAndVisible()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(changeVc(notification:)), name: Notification.Name.init("loggedIn"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeVc(notification:)), name: Notification.Name.init("authorizied"), object: nil)
         
         guard let _ = (scene as? UIWindowScene) else { return }
     }
@@ -30,9 +32,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     @objc func changeVc(notification: Notification) {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.2) {
-                if SessionEntity.user.role == 1 {
+                if SessionEntity.user.role == 0 {
                     self.window?.rootViewController = AdministratorMainController()
-                } else if SessionEntity.user.role == 0 {
+                } else if SessionEntity.user.role == 1 {
                     self.window?.rootViewController = CommonMainController()
                 }
             }

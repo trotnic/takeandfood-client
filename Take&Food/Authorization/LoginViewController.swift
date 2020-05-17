@@ -74,6 +74,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         view.addSubview(loginField)
         view.addSubview(passwordField)
         view.addSubview(submitButton)
@@ -164,7 +165,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 UserDefaults.standard.set(true, forKey: "status")
                 SessionEntity.user = data
                 DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: "loggedIn"), object: nil)
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "authorizied"), object: nil)
                 }
                 return
             }
@@ -200,15 +201,4 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

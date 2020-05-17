@@ -14,4 +14,5 @@ struct Announcement: Codable {
     let restaurantId: Int?
     let dishes: [Dish]?
     let date: String?
+    let status: Int?
 }

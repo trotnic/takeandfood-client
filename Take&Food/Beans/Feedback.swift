@@ -10,9 +10,9 @@ import Foundation
 
 
 struct Feedback: Codable {
-    let id: Int
-    let userID: Int
-    let restaurantID: Int
-    let text: String
-    let date: String
+    let id: Int?
+    let personId: Int?
+    let restaurantId: Int?
+    let text: String?
+    let date: String?
 }

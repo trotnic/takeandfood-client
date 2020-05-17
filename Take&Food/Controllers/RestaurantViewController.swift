@@ -9,19 +9,20 @@
 import UIKit
 //import Alamofire
 
-class RestaurantViewController: UIViewController, UITableViewDataSource {
+class RestaurantViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     let restaurant: Restaurant
     var feedView: UITableView
-//    var feedData: [Feedback]?
+    var feedData: [Feedback]?
     var inputField: UITextField
-    var submitButton: UIButton
+//    var submitButton: UIButton
 
     init(restaurant: Restaurant) {
+        
         self.restaurant = restaurant
         self.feedView = UITableView()
         self.inputField = UITextField()
-        self.submitButton = UIButton()
+//        self.submitButton = UIButton()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -29,32 +30,44 @@ class RestaurantViewController: UIViewController, UITableViewDataSource {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        super.loadView()
+        self.view.addSubview(self.inputField)
+        self.feedView.translatesAutoresizingMaskIntoConstraints = false
+        self.inputField.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        fetchData()
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = "Create restaurant"
-        
-        
-        self.view.addSubview(feedView)
-        self.view.addSubview(self.inputField)
-        self.view.addSubview(self.submitButton)
+        self.feedView.dataSource = self
+        self.feedView.delegate = self
         self.feedView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
-
-        self.feedView.translatesAutoresizingMaskIntoConstraints = false
-        self.inputField.translatesAutoresizingMaskIntoConstraints = false
-        self.submitButton.translatesAutoresizingMaskIntoConstraints = false
         
-        self.submitButton.setTitle("Submit", for: .normal)
-        self.submitButton.setTitleColor(.black, for: .normal)
-        self.submitButton.setTitleColor(.red, for: .highlighted)
-        self.submitButton.titleLabel?.textAlignment = .center
-        self.submitButton.addTarget(self, action: #selector(submitData(sender:)), for: .touchUpInside)
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(containerView)
+        containerView.addSubview(feedView)
+        
+        
+        
+
+        
+//        self.submitButton.setTitle("Submit", for: .normal)
+//        self.submitButton.setTitleColor(.black, for: .normal)
+//        self.submitButton.setTitleColor(.red, for: .highlighted)
+//        self.submitButton.titleLabel?.textAlignment = .center
+//        self.submitButton.addTarget(self, action: #selector(submitData(sender:)), for: .touchUpInside)
         
         self.inputField.borderStyle = .roundedRect
         self.inputField.placeholder = "Type comment.."
         
-        self.feedView.dataSource = self
         
         
         
@@ -62,27 +75,34 @@ class RestaurantViewController: UIViewController, UITableViewDataSource {
         self.navigationItem.title = restaurant.name
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
-//        UILabel name = 
         
-        // Do any additional setup after loading the view.
-    }
-    
-    override func viewDidLayoutSubviews() {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "paperplane"), for: .normal)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -30, bottom: 0, right: 0)
+        button.frame = CGRect(x: inputField.bounds.width - 60, y: 5, width: 35, height: 35)
+        button.addTarget(self, action: #selector(submitData(sender:)), for: .touchUpInside)
+        
+        
+        inputField.rightView = button
+        inputField.rightViewMode = .always
+        
         NSLayoutConstraint.activate([
-            self.feedView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            self.feedView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.feedView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.feedView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -300),
             
-            self.inputField.topAnchor.constraint(equalTo: self.feedView.bottomAnchor, constant: 30),
-            self.inputField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
-            self.inputField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
-            self.inputField.heightAnchor.constraint(equalToConstant: 40),
             
-            self.submitButton.leadingAnchor.constraint(equalTo: self.inputField.leadingAnchor),
-            self.submitButton.topAnchor.constraint(equalTo: self.inputField.bottomAnchor, constant: 30),
-            self.submitButton.trailingAnchor.constraint(equalTo: self.inputField.trailingAnchor),
-            self.submitButton.heightAnchor.constraint(equalToConstant: 30)
+            inputField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            inputField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            inputField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            inputField.heightAnchor.constraint(equalToConstant: 40),
+            
+            containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            containerView.trailingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.trailingAnchor, multiplier: -10),
+            containerView.bottomAnchor.constraint(equalTo: inputField.topAnchor, constant: -30),
+            containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            
+            feedView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            feedView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            feedView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            feedView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
     
@@ -105,15 +125,19 @@ class RestaurantViewController: UIViewController, UITableViewDataSource {
 //        }
 //    }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func fetchData() {
+        TAFNetwork.request(router: .getRestaurantFeedback(id: restaurant.id!)) { (result: Result<[Feedback], Error>) in
+            switch result {
+            case .success(let data):
+                self.feedData = data
+                DispatchQueue.main.async {
+                    self.feedView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
-    */
 
     @objc func submitData(sender: UIButton) {
         
@@ -125,13 +149,26 @@ class RestaurantViewController: UIViewController, UITableViewDataSource {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
 
+        TAFNetwork.request(router: .createFeedback(form: Feedback(id: nil,
+                                                                  personId: SessionEntity.user.id,
+                                                                  restaurantId: restaurant.id,
+                                                                  text: inputField.text,
+                                                                  date: dateFormatter.string(from: date)))) { (result: Result<Feedback, Error>) in
+                                                                    self.fetchData()
+        }
+        
 //        Alamofire.request(Router.createFeedback(restaurantID: self.restaurant.id!, userID: 1, text: self.inputField.text!, date: dateFormatter.string(from: date))).responseJSON { (response) in
 //            print(response)
 //        }
     }
     
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let data = self.restaurant.announcements {
+        if let data = self.feedData {
             return data.count
         }
         return 0
@@ -140,7 +177,7 @@ class RestaurantViewController: UIViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         
-        cell.textLabel?.text = self.restaurant.announcements?[indexPath.row].date
+        cell.textLabel?.text = self.feedData?[indexPath.row].text
         return cell
     }
     

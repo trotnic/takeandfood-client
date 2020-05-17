@@ -14,7 +14,9 @@ class AnnouncementListController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 150
         
         if (SessionEntity.user.role == 0) {
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(createNewOne))
@@ -28,7 +30,7 @@ class AnnouncementListController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
+        self.tableView.register(AnnouncementCell.self, forCellReuseIdentifier: "reuseIdentifier")
     }
 
     @objc func createNewOne() {
@@ -70,16 +72,35 @@ class AnnouncementListController: UITableViewController {
         }
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+    
         cell.textLabel?.text = self.data?[indexPath.row].date!
+        if (self.data?[indexPath.row].status == 1) {
+            cell.textLabel?.textColor = .gray
+        }
 
         return cell
     }
     
+    
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+//        guard let cell = tableView.cellForRow(at: indexPath) as? AnnouncementCell else {
+//            return
+//        }
+//        cell.toggleList()
+//        tableView.reloadRows(at: [indexPath], with: .automatic)
+//        tableView.beginUpdates()
+//        tableView.endUpdates()
+//        DispatchQueue.main.async {
+//            UIView.animate(withDuration: 0.3) {
+
+//                cell.toggleList()
+//            }
+//        }
+        
         if let data = self.data {
             self.navigationController?.pushViewController(DishTableController(announcement: data[indexPath.row]), animated: true)
         }
