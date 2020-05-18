@@ -12,7 +12,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -20,25 +19,47 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: scene as! UIWindowScene)
         let vc = UINavigationController()
-        vc.viewControllers = [RegistrationViewController()]
+//        vc.viewControllers = [InitialViewController()]
+        SessionEntity.user = MockupData.user
+        vc.viewControllers = [AdministratorMainController()]
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(changeVc(notification:)), name: Notification.Name.init("authorizied"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(changeVc(notification:)), name: Notification.Name("authorizied"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(logout(notification:)), name: Notification.Name("logout"), object: nil)
         
         guard let _ = (scene as? UIWindowScene) else { return }
     }
     
-    @objc func changeVc(notification: Notification) {
+    @objc func logout(notification: Notification) {
+        let vc = UINavigationController()
+        vc.viewControllers = [InitialViewController()]
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.2) {
-                if SessionEntity.user.role == 0 {
-                    self.window?.rootViewController = AdministratorMainController()
-                } else if SessionEntity.user.role == 1 {
-                    self.window?.rootViewController = CommonMainController()
+                self.window?.rootViewController?.dismiss(animated: false) {
+                    self.window?.rootViewController = vc
                 }
             }
-            
+        }
+    }
+    
+    @objc func changeVc(notification: Notification) {
+        if SessionEntity.user.role == 0 {
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.2) {
+                    self.window?.rootViewController?.dismiss(animated: false) {
+                        self.window?.rootViewController = AdministratorMainController()
+                    }
+                }
+            }
+        } else if SessionEntity.user.role == 1 {
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.2) {
+                    self.window?.rootViewController?.dismiss(animated: true) {
+                        self.window?.rootViewController = CommonMainController()
+                    }
+                }
+            }
         }
     }
 

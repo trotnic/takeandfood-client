@@ -11,14 +11,14 @@ import Foundation
 
 
 struct MockupData {
-    static let user = Person(id: 5,
+    static let user = Person(id: 25,
                              name: "vladislav",
                              login: "trotnic",
                              password: "password",
-                             email: "email@meal.com",
-                             restaurantId: 6,
-                             role: 1,
-                             status: 0)
+                             email: "email@email.com",
+                             restaurantId: 26,
+                             role: 0,
+                             status: 1)
     static let authUser = AuthEntity(login: "trotnic",
                                      password: "password",
                                      status: nil, role: nil)

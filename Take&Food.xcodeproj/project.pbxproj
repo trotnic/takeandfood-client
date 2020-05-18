@@ -25,6 +25,9 @@
 		866685182470A0A70087E74F /* AcceptOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866685172470A0A70087E74F /* AcceptOrderViewController.swift */; };
 		8666851B24712B1B0087E74F /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8666851A24712B1B0087E74F /* RegistrationViewController.swift */; };
 		8666851E247138160087E74F /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8666851D247138160087E74F /* ViewControllerExtensions.swift */; };
+		8666852024713E720087E74F /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8666851F24713E720087E74F /* InitialViewController.swift */; };
+		866685232471D5A40087E74F /* Statuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866685222471D5A40087E74F /* Statuses.swift */; };
+		86668525247207730087E74F /* PersonEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86668524247207730087E74F /* PersonEditController.swift */; };
 		86B38B45246EBFD900F49C54 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B44246EBFD900F49C54 /* Router.swift */; };
 		86B38B47246EC76B00F49C54 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B46246EC76B00F49C54 /* NetworkService.swift */; };
 		86B38B49246F1EF500F49C54 /* AuthEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B38B48246F1EF500F49C54 /* AuthEntity.swift */; };
@@ -67,6 +70,9 @@
 		866685172470A0A70087E74F /* AcceptOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptOrderViewController.swift; sourceTree = "<group>"; };
 		8666851A24712B1B0087E74F /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		8666851D247138160087E74F /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
+		8666851F24713E720087E74F /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		866685222471D5A40087E74F /* Statuses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statuses.swift; sourceTree = "<group>"; };
+		86668524247207730087E74F /* PersonEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonEditController.swift; sourceTree = "<group>"; };
 		86B38B44246EBFD900F49C54 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		86B38B46246EC76B00F49C54 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		86B38B48246F1EF500F49C54 /* AuthEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEntity.swift; sourceTree = "<group>"; };
@@ -142,6 +148,7 @@
 				86447C1C24530C8F0043A334 /* PersonViewController.swift */,
 				86668515247092740087E74F /* OrdersListControllerTableViewController.swift */,
 				866685172470A0A70087E74F /* AcceptOrderViewController.swift */,
+				86668524247207730087E74F /* PersonEditController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -151,6 +158,7 @@
 			children = (
 				86B38B4A246F1FEF00F49C54 /* LoginViewController.swift */,
 				8666851A24712B1B0087E74F /* RegistrationViewController.swift */,
+				8666851F24713E720087E74F /* InitialViewController.swift */,
 			);
 			path = Authorization;
 			sourceTree = "<group>";
@@ -161,6 +169,14 @@
 				8666851D247138160087E74F /* ViewControllerExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		866685212471D5990087E74F /* Collections */ = {
+			isa = PBXGroup;
+			children = (
+				866685222471D5A40087E74F /* Statuses.swift */,
+			);
+			path = Collections;
 			sourceTree = "<group>";
 		};
 		86B38B50246FEA9F00F49C54 /* TabControllers */ = {
@@ -210,6 +226,7 @@
 		86BDEA24244F2ECF001B1896 /* Take&Food */ = {
 			isa = PBXGroup;
 			children = (
+				866685212471D5990087E74F /* Collections */,
 				8666851C247138010087E74F /* Extensions */,
 				8666851924712ABA0087E74F /* Authorization */,
 				86B38B582470179A00F49C54 /* Cells */,
@@ -377,11 +394,13 @@
 				86B38B47246EC76B00F49C54 /* NetworkService.swift in Sources */,
 				86564B29244F92C7003F21F3 /* MainController.swift in Sources */,
 				86564B3D24502ADC003F21F3 /* RestaurantViewController.swift in Sources */,
+				8666852024713E720087E74F /* InitialViewController.swift in Sources */,
 				866685182470A0A70087E74F /* AcceptOrderViewController.swift in Sources */,
 				86564B22244F67E0003F21F3 /* Person.swift in Sources */,
 				86564B2D244F94FF003F21F3 /* Feedback.swift in Sources */,
 				86564B25244F78D7003F21F3 /* DataService.swift in Sources */,
 				86564B2F244F9538003F21F3 /* Announcement.swift in Sources */,
+				866685232471D5A40087E74F /* Statuses.swift in Sources */,
 				8666851B24712B1B0087E74F /* RegistrationViewController.swift in Sources */,
 				86BDEA2A244F2ECF001B1896 /* ViewController.swift in Sources */,
 				86B38B49246F1EF500F49C54 /* AuthEntity.swift in Sources */,
@@ -390,6 +409,7 @@
 				8666851E247138160087E74F /* ViewControllerExtensions.swift in Sources */,
 				86B38B5A247017B200F49C54 /* AnnouncementCell.swift in Sources */,
 				86BDEA3D244F5D91001B1896 /* Constants.swift in Sources */,
+				86668525247207730087E74F /* PersonEditController.swift in Sources */,
 				86BDEA26244F2ECF001B1896 /* AppDelegate.swift in Sources */,
 				86B38B52246FEABC00F49C54 /* CommonTabBarController.swift in Sources */,
 				86B38B4D246FD9F700F49C54 /* SessionEntity.swift in Sources */,

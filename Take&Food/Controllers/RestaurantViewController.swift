@@ -48,6 +48,7 @@ class RestaurantViewController: UIViewController, UITableViewDataSource, UITable
         self.feedView.delegate = self
         self.feedView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         
+        self.view.backgroundColor = self.traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark ? .black : .white
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
         let containerView = UIView()
@@ -55,23 +56,12 @@ class RestaurantViewController: UIViewController, UITableViewDataSource, UITable
         view.addSubview(containerView)
         containerView.addSubview(feedView)
         
-        
-        
-
-        
-//        self.submitButton.setTitle("Submit", for: .normal)
-//        self.submitButton.setTitleColor(.black, for: .normal)
-//        self.submitButton.setTitleColor(.red, for: .highlighted)
-//        self.submitButton.titleLabel?.textAlignment = .center
-//        self.submitButton.addTarget(self, action: #selector(submitData(sender:)), for: .touchUpInside)
-        
         self.inputField.borderStyle = .roundedRect
         self.inputField.placeholder = "Type comment.."
         
         
         
         
-        self.view.backgroundColor = .white
         self.navigationItem.title = restaurant.name
         self.navigationController?.navigationBar.prefersLargeTitles = true
         
@@ -105,6 +95,15 @@ class RestaurantViewController: UIViewController, UITableViewDataSource, UITable
             feedView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if previousTraitCollection?.userInterfaceStyle == UIUserInterfaceStyle.dark {
+            self.view.backgroundColor = .white
+        } else {
+            self.view.backgroundColor = .black
+        }
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

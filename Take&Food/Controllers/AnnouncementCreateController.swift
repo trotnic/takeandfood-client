@@ -9,21 +9,59 @@
 import UIKit
 //import Alamofire
 
-class AnnouncementCreateController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class AnnouncementCreateController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
 
     var dataList: [Dish]
-    let dishList: UITableView
-    let nameInput: UITextField
-    let amountInput: UITextField
-    let submitButton: UIButton
-    let addButton: UIButton
+    
+    let dishList: UITableView = {
+        let table = UITableView()
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
+    
+    let nameInput: UITextField = {
+        let field = UITextField()
+        field.borderStyle = .roundedRect
+        field.placeholder = "Enter name"
+        field.tag = 0
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    let amountInput: UITextField = {
+        let field = UITextField()
+        field.borderStyle = .roundedRect
+        field.placeholder = "Enter amount in grams"
+        field.tag = 1
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    let submitButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Submit", for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.withAlphaComponent(0.2).cgColor
+        button.layer.cornerRadius = 5
+        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+        button.titleLabel?.textAlignment = .center
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    let addButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Add", for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.withAlphaComponent(0.2).cgColor
+        button.layer.cornerRadius = 5
+        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+        button.titleLabel?.textAlignment = .center
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     init() {
-        self.dishList = UITableView()
-        self.nameInput = UITextField()
-        self.amountInput = UITextField()
-        self.submitButton = UIButton()
-        self.addButton = UIButton()
         self.dataList = [Dish]()
         super.init(nibName: nil, bundle: nil)
     }
@@ -35,26 +73,21 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource, UIT
     override func loadView() {
         super.loadView()
         
-//        self.view.addSubview(self.dishList)
         self.view.addSubview(self.nameInput)
         self.view.addSubview(self.amountInput)
         self.view.addSubview(self.addButton)
         self.view.addSubview(self.submitButton)
         
-        self.dishList.translatesAutoresizingMaskIntoConstraints = false
-        self.nameInput.translatesAutoresizingMaskIntoConstraints = false
-        self.amountInput.translatesAutoresizingMaskIntoConstraints = false
-        self.addButton.translatesAutoresizingMaskIntoConstraints = false
-        self.submitButton.translatesAutoresizingMaskIntoConstraints = false
-        
         self.dishList.dataSource = self
         self.dishList.delegate = self
+        self.amountInput.delegate = self
+        self.nameInput.delegate = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = self.traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark ? .black : .white
 
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Create announcement"
@@ -64,40 +97,7 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource, UIT
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(containerView)
-//        dishList.frame = containerView.bounds
         containerView.addSubview(dishList)
-        
-        
-        self.nameInput.backgroundColor = .white
-        self.amountInput.backgroundColor = .white
-        
-        
-        self.nameInput.borderStyle = .roundedRect
-        self.amountInput.borderStyle = .roundedRect
-        
-        self.nameInput.placeholder = "Type name.."
-        self.amountInput.placeholder = "Type amount.."
-        
-        self.addButton.setTitle("Add", for: .normal)
-        self.submitButton.setTitle("Submit", for: .normal)
-        
-        self.addButton.setTitleColor(.black, for: .normal)
-        self.submitButton.setTitleColor(.black, for: .normal)
-        
-        self.addButton.titleLabel?.textAlignment = .center
-        self.submitButton.titleLabel?.textAlignment = .center
-        
-        self.addButton.layer.borderWidth = 0.9
-        self.submitButton.layer.borderWidth = 0.9
-        
-        self.addButton.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
-        self.submitButton.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
-        
-        self.addButton.layer.cornerRadius = 5
-        self.submitButton.layer.cornerRadius = 5
-        
-        self.addButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-        self.submitButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         
         self.addButton.setTitleColor(.lightGray, for: .highlighted)
         self.submitButton.setTitleColor(.lightGray, for: .highlighted)
@@ -108,7 +108,7 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource, UIT
         NSLayoutConstraint.activate([
             nameInput.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             nameInput.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            nameInput.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            nameInput.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 40),
             nameInput.heightAnchor.constraint(equalToConstant: 40),
             
             amountInput.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
@@ -118,10 +118,12 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource, UIT
             
             addButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             addButton.topAnchor.constraint(equalTo: self.amountInput.bottomAnchor, constant: 30),
+            addButton.trailingAnchor.constraint(equalTo: self.view.centerXAnchor, constant: -10),
             addButton.heightAnchor.constraint(equalToConstant: 40),
             
-            submitButton.leadingAnchor.constraint(equalTo: self.addButton.trailingAnchor, constant: 20),
+            submitButton.leadingAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 10),
             submitButton.topAnchor.constraint(equalTo: self.amountInput.bottomAnchor, constant: 30),
+            submitButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
             submitButton.heightAnchor.constraint(equalToConstant: 40),
             
             containerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
@@ -134,14 +136,36 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource, UIT
             dishList.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             dishList.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
+        
+        configureBackground()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        configureBackground()
+    }
+    
+    func configureBackground() {
+        if self.traitCollection.userInterfaceStyle == .dark {
+            self.addButton.setTitleColor(.white, for: .normal)
+            self.addButton.layer.borderColor = UIColor.lightGray.cgColor
+            self.submitButton.setTitleColor(.white, for: .normal)
+            self.submitButton.layer.borderColor = UIColor.lightGray.cgColor
+            self.view.backgroundColor = .black
+        } else {
+            self.addButton.setTitleColor(.black, for: .normal)
+            self.submitButton.setTitleColor(.black, for: .normal)
+            self.view.backgroundColor = .white
+        }
     }
     
     @objc func addItem() {
         guard nameInput.text != "" && amountInput.text != "" else { return }
         self.dataList.append(Dish(id: nil, announcementId: nil, name: self.nameInput.text!, amount: Int(self.amountInput.text!)!))
-//        self.nameInput.text = ""
-//        self.amountInput.text = ""
         self.dishList.reloadData()
+        DispatchQueue.main.async {
+            self.nameInput.text = ""
+            self.amountInput.text = ""
+        }
     }
     
     @objc func submitList() {
@@ -189,16 +213,21 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource, UIT
         return UISwipeActionsConfiguration(actions: [checkAction])
     }
     
-
-//    - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-//        UIContextualAction *checkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-//            completionHandler(true);
-//        }];
-//
-//        checkAction.backgroundColor = UIColor.systemRedColor;
-//
-//        UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[checkAction]];
-//
-//        return config;
-//    }
+    
+    // MARK: -TextFieldDelegate
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField.tag == 1 {
+            if CharacterSet(charactersIn: "0123456789").isSuperset(of: CharacterSet(charactersIn: string)) {
+                return true
+            }
+            return false
+        } else {
+            if CharacterSet.letters.isSuperset(of: CharacterSet(charactersIn: string)) {
+                return true
+            }
+            return false
+        }
+    }
+    
 }

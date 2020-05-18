@@ -29,6 +29,7 @@ enum TAFRouter {
     case deleteOrder(id: Int)
     
     case getPerson(id: Int)
+    case updatePerson(form: Person)
     
     case login(form: AuthEntity)
     
@@ -42,7 +43,7 @@ enum TAFRouter {
     }
     
     var host: String {
-        return "192.168.0.112"
+        return "localhost"
     }
     
     var port: Int {
@@ -78,7 +79,8 @@ enum TAFRouter {
             return "/order"
         case .getOrdersForRestaurant:
             return "/order/restaurant"
-        case .getPerson:
+        case .getPerson,
+             .updatePerson:
             return "/person"
         case .register:
             return "/auth/register"
@@ -118,7 +120,8 @@ enum TAFRouter {
              .createFeedback,
              .updateOrder,
              .createAnnouncement,
-             .register:
+             .register,
+             .updatePerson:
             break
         }
         return queryItems
@@ -130,7 +133,6 @@ enum TAFRouter {
             fallthrough
         case .register(let form):
             return try! JSONEncoder().encode(form)
-        
         case .createOrder(let order):
             return try! JSONEncoder().encode(order)
         case .createFeedback(let feedback):
@@ -138,6 +140,8 @@ enum TAFRouter {
         case .updateOrder(let order):
             return try! JSONEncoder().encode(order)
         case .createAnnouncement(let form):
+            return try! JSONEncoder().encode(form)
+        case .updatePerson(let form):
             return try! JSONEncoder().encode(form)
         default:
             return Data()
@@ -163,7 +167,8 @@ enum TAFRouter {
              .createAnnouncement,
              .register:
             return "POST"
-        case .updateOrder:
+        case .updateOrder,
+             .updatePerson:
             return "PUT"
         case .deleteOrder,
              .deleteAnnouncement:

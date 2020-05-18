@@ -29,9 +29,6 @@ class AdministratorMainController: UITabBarController {
         let vc4 = UINavigationController()
         vc4.viewControllers = [OrdersListControllerTableViewController()]
         vc4.tabBarItem = UITabBarItem(title: "Orders", image: UIImage(systemName: "wand.and.stars"), tag: 3)
-//        let vc4 = UINavigationController()
-//        vc4.viewControllers = [RestaurantViewController()]
-//        vc4.tabBarItem = UITabBarItem(title: "Restaurant page", image: UIImage(systemName: "scissors"), tag: 3)
         
         viewControllers = [vc1, vc2, vc3, vc4]
         selectedViewController = vc1
