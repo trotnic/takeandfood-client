@@ -12,17 +12,30 @@ import UIKit
 class RestaurantViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     let restaurant: Restaurant
-    var feedView: UITableView
+    
+    var feedView: UITableView = {
+        let table = UITableView()
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
+    
     var feedData: [Feedback]?
-    var inputField: UITextField
-//    var submitButton: UIButton
+    
+    var inputField: UITextField = {
+        let field = UITextField()
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    let addressLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     init(restaurant: Restaurant) {
         
         self.restaurant = restaurant
-        self.feedView = UITableView()
-        self.inputField = UITextField()
-//        self.submitButton = UIButton()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -33,16 +46,16 @@ class RestaurantViewController: UIViewController, UITableViewDataSource, UITable
     override func loadView() {
         super.loadView()
         self.view.addSubview(self.inputField)
-        self.feedView.translatesAutoresizingMaskIntoConstraints = false
-        self.inputField.translatesAutoresizingMaskIntoConstraints = false
-        
-        
+        self.view.addSubview(self.addressLabel)
         fetchData()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(updateInput(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateInput(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         
         self.feedView.dataSource = self
         self.feedView.delegate = self
@@ -59,12 +72,8 @@ class RestaurantViewController: UIViewController, UITableViewDataSource, UITable
         self.inputField.borderStyle = .roundedRect
         self.inputField.placeholder = "Type comment.."
         
-        
-        
-        
         self.navigationItem.title = restaurant.name
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        
         
         let button = UIButton(type: .custom)
         button.setImage(UIImage(systemName: "paperplane"), for: .normal)
@@ -72,27 +81,30 @@ class RestaurantViewController: UIViewController, UITableViewDataSource, UITable
         button.frame = CGRect(x: inputField.bounds.width - 60, y: 5, width: 35, height: 35)
         button.addTarget(self, action: #selector(submitData(sender:)), for: .touchUpInside)
         
-        
         inputField.rightView = button
         inputField.rightViewMode = .always
         
         NSLayoutConstraint.activate([
             
-            
-            inputField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            inputField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            inputField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            inputField.heightAnchor.constraint(equalToConstant: 40),
-            
             containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             containerView.trailingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.trailingAnchor, multiplier: -10),
             containerView.bottomAnchor.constraint(equalTo: inputField.topAnchor, constant: -30),
-            containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            containerView.topAnchor.constraint(equalTo: addressLabel.bottomAnchor, constant: 50),
             
             feedView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             feedView.topAnchor.constraint(equalTo: containerView.topAnchor),
             feedView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            feedView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            feedView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            
+            addressLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            addressLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            addressLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            addressLabel.heightAnchor.constraint(equalToConstant: 30),
+            
+            inputField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            inputField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            inputField.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
+            inputField.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
@@ -104,25 +116,18 @@ class RestaurantViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        self.fetchData()
+        self.addressLabel.text = restaurant.address
     }
     
-//    func fetchData() {
-//        TAFNetwork.request(router: .getRestaurantFeedback(id: restaurant.id!)) { (result: Result<[Feedback], Error>) in
-//            switch result {
-//            case .success(let data):
-//                self.feedData = data
-//                DispatchQueue.main.async {
-//                    self.feedView.reloadData()
-//                }
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//    }
+    @objc func updateInput(notification: Notification) {
+        let rect = notification.userInfo?["UIKeyboardFrameEndUserInfoKey"] as! CGRect
+        self.additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: self.view.bounds.height - rect.minY - 60, right: 0)
+    }
+    
+    func setupInput(offset: CGFloat) {
+    }
 
     func fetchData() {
         TAFNetwork.request(router: .getRestaurantFeedback(id: restaurant.id!)) { (result: Result<[Feedback], Error>) in
@@ -146,19 +151,21 @@ class RestaurantViewController: UIViewController, UITableViewDataSource, UITable
         
         let date = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
 
-        TAFNetwork.request(router: .createFeedback(form: Feedback(id: nil,
-                                                                  personId: SessionEntity.user.id,
-                                                                  restaurantId: restaurant.id,
-                                                                  text: inputField.text,
-                                                                  date: dateFormatter.string(from: date)))) { (result: Result<Feedback, Error>) in
-                                                                    self.fetchData()
-        }
+        TAFNetwork.request(
+            router: .createFeedback(
+                form: Feedback(
+                    id: nil,
+                    personId: SessionEntity.user.id,
+                    restaurantId: restaurant.id,
+                    text: self.inputField.text,
+                    date: dateFormatter.string(from: date)))) { (result: Result<Feedback, Error>) in
+                                        self.fetchData()}
         
-//        Alamofire.request(Router.createFeedback(restaurantID: self.restaurant.id!, userID: 1, text: self.inputField.text!, date: dateFormatter.string(from: date))).responseJSON { (response) in
-//            print(response)
-//        }
+        DispatchQueue.main.async {
+            self.inputField.text = ""
+        }
     }
     
     

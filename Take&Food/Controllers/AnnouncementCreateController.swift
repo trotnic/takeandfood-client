@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import Alamofire
 
 class AnnouncementCreateController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
 
@@ -172,7 +171,7 @@ class AnnouncementCreateController: UIViewController, UITableViewDataSource, UIT
         if dataList.count == 0 { return }
         let date = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         let announcement = Announcement(id: nil, restaurantId: SessionEntity.user.restaurantId!, dishes: self.dataList, date: dateFormatter.string(from: date), status: 0)
         print(announcement)
         TAFNetwork.request(router: .createAnnouncement(form: announcement)) { (result: Result<Announcement, Error>) in

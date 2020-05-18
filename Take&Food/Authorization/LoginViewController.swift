@@ -15,6 +15,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         field.translatesAutoresizingMaskIntoConstraints = false
         field.placeholder = "Enter login"
         field.borderStyle = .roundedRect
+        field.autocapitalizationType = .none
         return field
     }()
     
@@ -23,6 +24,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         field.translatesAutoresizingMaskIntoConstraints = false
         field.placeholder = "Enter password"
         field.isSecureTextEntry = true
+        field.autocapitalizationType = .none
         field.borderStyle = .roundedRect
         return field
     }()

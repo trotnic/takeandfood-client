@@ -13,17 +13,24 @@ class AcceptOrderViewController: UIViewController, UITableViewDelegate, UITableV
     var person: Person?
     var announcement: Announcement
     var orderId: Int
+    var personId: Int
     
     let nameLabel: UILabel = {
-        let lbl = UILabel()
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     let dateLable: UILabel = {
-        let lbl = UILabel()
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let statusLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     let dishList: UITableView = {
@@ -35,61 +42,83 @@ class AcceptOrderViewController: UIViewController, UITableViewDelegate, UITableV
     init(data: [String: Announcement], orderId: Int) {
         announcement = data.values.first!
         self.orderId = orderId
+        self.personId = Int(data.keys.first!)!
         super.init(nibName: nil, bundle: nil)
-        fetchData(id: Int(data.keys.first!) ?? 0)
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        super.loadView()
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.title = "#\(orderId)"
+        view.addSubview(dateLable)
+        view.addSubview(statusLabel)
+        view.addSubview(nameLabel)
+        fetchData(id: personId)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         dishList.delegate = self
         dishList.dataSource = self
         dishList.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
-        
-        view.backgroundColor = .white
         
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(systemName: "xmark.circle"), style: .plain, target: self, action: #selector(decline)),
             UIBarButtonItem(image: UIImage(systemName: "checkmark.circle"), style: .plain, target: self, action: #selector(approve))
         ]
         
-        view.addSubview(dateLable)
-        dateLable.text = announcement.date
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, h:mm a"
+        
+        dateLable.text = dateFormatter.string(from: dateFormatter.date(from: announcement.date ?? "") ?? Date())
         
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(dishList)
         view.addSubview(containerView)
         
-        view.addSubview(nameLabel)
-        nameLabel.text = "Name: "
+        
+        nameLabel.text = "Name:"
+        statusLabel.text = "Status:"
         
         NSLayoutConstraint.activate([
-            nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
             nameLabel.heightAnchor.constraint(equalToConstant: 40),
             
-            dateLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            dateLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             dateLable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             dateLable.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 100),
             dateLable.heightAnchor.constraint(equalToConstant: 30),
             
             containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 10),
+            containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             containerView.topAnchor.constraint(equalTo: dateLable.bottomAnchor, constant: 10),
             containerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             
             dishList.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             dishList.topAnchor.constraint(equalTo: containerView.topAnchor),
             dishList.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            dishList.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+            dishList.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            
+            statusLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            statusLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            statusLabel.heightAnchor.constraint(equalToConstant: 30),
+            statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20)
         ])
-        // Do any additional setup after loading the view.
+        configureBackground()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        configureBackground()
     }
     
     @objc func decline() {
@@ -97,9 +126,9 @@ class AcceptOrderViewController: UIViewController, UITableViewDelegate, UITableV
             switch result {
             case .failure(let error):
                 print(error)
-                self.navigationController?.popViewController(animated: true)
             case .success(let response):
                 print(response)
+                self.navigationController?.popViewController(animated: true)
             }
         }
     }
@@ -110,6 +139,7 @@ class AcceptOrderViewController: UIViewController, UITableViewDelegate, UITableV
             switch result {
             case .success(let order):
                 print(order)
+                self.navigationController?.popViewController(animated: true)
             case .failure(let error):
                 print(error)
             }
@@ -122,9 +152,10 @@ class AcceptOrderViewController: UIViewController, UITableViewDelegate, UITableV
             switch result {
             case .success(let person):
                 self.person = person
-                print(person)
                 DispatchQueue.main.async {
-                    self.nameLabel.text = "Name: \(person.name!)"
+                    self.nameLabel.text = "Name: \(person.name ?? "_")"
+                    self.statusLabel.text = "Status: \(Status.allCases[person.status ?? 0].rawValue)"
+                    
                 }
             case .failure(let error):
                 print(error)
@@ -133,9 +164,10 @@ class AcceptOrderViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        
+        var cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        cell = UITableViewCell(style: .subtitle, reuseIdentifier: "reuseIdentifier")
         cell.textLabel?.text = self.announcement.dishes?[indexPath.row].name
+        cell.detailTextLabel?.text = "\(self.announcement.dishes?[indexPath.row].amount ?? 0)g"
         return cell
     }
     
@@ -147,14 +179,11 @@ class AcceptOrderViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func configureBackground() {
+        if self.traitCollection.userInterfaceStyle == .dark {
+            self.view.backgroundColor = .black
+        } else {
+            self.view.backgroundColor = .white
+        }
     }
-    */
-
 }

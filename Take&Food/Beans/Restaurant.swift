@@ -14,4 +14,5 @@ struct Restaurant: Codable {
     let name: String?
     let administrators: [Person]?
     let announcements: [Announcement]?
+    let address: String?
 }

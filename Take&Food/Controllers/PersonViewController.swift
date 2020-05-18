@@ -15,7 +15,6 @@ class PersonViewController: UIViewController, UITableViewDataSource, UITableView
     let nameLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.text = SessionEntity.user.name
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -23,21 +22,18 @@ class PersonViewController: UIViewController, UITableViewDataSource, UITableView
     let emailLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = SessionEntity.user.email ?? ""
         return label
     }()
     
     let loginLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = SessionEntity.user.login
         return label
     }()
     
     let statusLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = Status.allCases[SessionEntity.user.status!].rawValue
         return label
     }()
     
@@ -46,6 +42,15 @@ class PersonViewController: UIViewController, UITableViewDataSource, UITableView
         list.translatesAutoresizingMaskIntoConstraints = false
         return list
     }()
+    
+    override func loadView() {
+        super.loadView()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateForNotification(notification:)), name: Notification.Name("ordered"), object: nil)
+    }
+    
+    @objc func updateForNotification(notification: Notification) {
+        fetchData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,6 +113,21 @@ class PersonViewController: UIViewController, UITableViewDataSource, UITableView
         ])
         
         setupSupplementaryViews()
+        
+        fetchData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.nameLabel.text = SessionEntity.user.name
+        self.emailLabel.text = SessionEntity.user.email ?? ""
+        self.loginLabel.text = SessionEntity.user.login
+        self.statusLabel.text = Status.allCases[SessionEntity.user.status!].rawValue
     }
     
     func setupSupplementaryViews() {
@@ -182,13 +202,26 @@ class PersonViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-        cell.textLabel?.text = announcements?[indexPath.row].date
-        cell.textLabel?.textColor = announcements?[indexPath.row].status == 0 ? .systemYellow : .systemGreen
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
+        
+        cell.textLabel?.text = dateFormatter.string(from: dateFormatter.date(from: announcements?[indexPath.row].date ?? "") ?? Date())
+        
+        switch announcements?[indexPath.row].status {
+        case 1:
+            cell.textLabel?.textColor = .systemYellow
+        case 2:
+            cell.textLabel?.textColor = .systemGreen
+        default:
+            break
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        self.navigationController?.pushViewController(DishTableController(announcement: announcements![indexPath.row]), animated: true)
+        
     }
     
     @objc func logout() {

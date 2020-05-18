@@ -14,6 +14,8 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
        let field = UITextField()
         field.translatesAutoresizingMaskIntoConstraints = false
         field.placeholder = "Confirm password"
+        field.autocapitalizationType = .none
+        field.isSecureTextEntry = true
         field.borderStyle = .roundedRect
         return field
     }()
@@ -22,6 +24,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
         let field = UITextField()
         field.translatesAutoresizingMaskIntoConstraints = false
         field.placeholder = "Enter login"
+        field.autocapitalizationType = .none
         field.borderStyle = .roundedRect
         return field
     }()
@@ -30,6 +33,8 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
         let field = UITextField()
         field.translatesAutoresizingMaskIntoConstraints = false
         field.placeholder = "Enter password"
+        field.autocapitalizationType = .none
+        field.isSecureTextEntry = true
         field.borderStyle = .roundedRect
         return field
     }()
@@ -88,6 +93,16 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
     
+    let statusSup: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        label.textColor = .black
+        label.backgroundColor = .clear
+        label.text = "Social status"
+        return label
+    }()
+    
     override func loadView() {
         super.loadView()
         
@@ -111,6 +126,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(loginWarn)
         view.addSubview(passwordWarn)
         view.addSubview(confirmationWarn)
+        view.addSubview(statusSup)
         
         self.confirmationWarn.text = "something to check"
         self.passwordWarn.text = "something to check"
@@ -154,7 +170,11 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
             
             confirmationWarn.heightAnchor.constraint(equalToConstant: 20),
             confirmationWarn.bottomAnchor.constraint(equalTo: confirmPassword.topAnchor),
-            confirmationWarn.leadingAnchor.constraint(equalTo: confirmPassword.leadingAnchor, constant: 10)
+            confirmationWarn.leadingAnchor.constraint(equalTo: confirmPassword.leadingAnchor, constant: 10),
+            
+            statusSup.heightAnchor.constraint(equalToConstant: 20),
+            statusSup.bottomAnchor.constraint(equalTo: statusControl.topAnchor),
+            statusSup.leadingAnchor.constraint(equalTo: statusControl.leadingAnchor, constant: 10),
         ])
         
         configureBackground()
@@ -230,7 +250,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
             return false
         }
         
-        if loginField.text?.count ?? 0 < 8 {
+        if passwordField.text!.count < 8 {
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 0.2) {
                     self.passwordWarn.alpha = 1
@@ -241,7 +261,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
             return false
         }
         
-        if loginField.text != confirmPassword.text {
+        if passwordField.text != confirmPassword.text {
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 0.2) {
                     self.confirmationWarn.alpha = 1
@@ -297,6 +317,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
             self.confirmationWarn.textColor = .white
             self.loginWarn.textColor = .white
             self.passwordWarn.textColor = .white
+            self.statusSup.textColor = .white
         } else {
             self.view.backgroundColor = .white
             self.submitButton.layer.borderColor = UIColor.black.cgColor
@@ -305,6 +326,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate {
             self.confirmationWarn.textColor = .black
             self.loginWarn.textColor = .black
             self.passwordWarn.textColor = .black
+            self.statusSup.textColor = .black
         }
     }
     

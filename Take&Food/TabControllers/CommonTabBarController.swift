@@ -20,11 +20,11 @@ class CommonMainController: UITabBarController {
         
         let vc2 = UINavigationController()
         vc2.viewControllers = [RestaurantListController()]
-        vc2.tabBarItem = UITabBarItem(title: "Restaurants", image: UIImage(systemName: "wand.and.stars"), tag: 1)
+        vc2.tabBarItem = UITabBarItem(title: "Restaurants", image: UIImage(systemName: "bag"), tag: 1)
         
         let vc3 = UINavigationController()
         vc3.viewControllers = [AnnouncementListController()]
-        vc3.tabBarItem = UITabBarItem(title: "Announcements", image: UIImage(systemName: "scissors"), tag: 2)
+        vc3.tabBarItem = UITabBarItem(title: "Announcements", image: UIImage(systemName: "list.bullet"), tag: 2)
         
         viewControllers = [vc1, vc2, vc3]
     }
